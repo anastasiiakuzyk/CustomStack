@@ -3,7 +3,6 @@ public class ListStack<T> implements Stackable<T> {
     private ListStackItem<T> tail = null;
     private int size = 0;
 
-
     public void push(T value) {
         ListStackItem<T> objectDoublyNode = new ListStackItem<>(value);
         if (head == null) {

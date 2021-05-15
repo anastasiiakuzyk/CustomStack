@@ -1,32 +1,50 @@
-import java.util.ArrayList;
+import java.lang.reflect.Array;
 
 public class ArrayStack<T> implements Stackable<T> {
-    private ArrayList<T> array = new ArrayList<>();
+    private T[] array;
+    private final int MAX = 1000;
+    private int top = -1;
+
+    public ArrayStack(){
+        array = (T[]) Array.newInstance(Comparable.class, MAX);
+    }
+
+    private boolean isStackOverflow() {
+        return top+1 > 1000;
+    }
 
     public void push(T elem) {
-        this.array.add(0, elem);
+        if (!isStackOverflow()) {
+            top++;
+            this.array[top] = elem;
+        } else {
+            throw new StackOverflowError();
+        }
     }
 
     public T pop() {
-        T elem = this.array.get(0);
-        this.array.remove(0);
+        T elem = this.array[top];
+        top--;
         return elem;
     }
 
     @Override
     public String toString() {
         String result = "";
-        for (int i = 0; i < array.size(); i++) {
-            result = result.concat(array.get(i).toString() + " ");
+        if (top < 0) {
+            return result;
+        }
+        for (int i = top; i >= 0; i--) {
+            result = result.concat(array[i].toString() + " ");
         }
         return result;
     }
 
     public boolean isEmpty() {
-        return this.array.size() == 0;
+        return this.top < 0;
     }
 
     public int size() {
-        return this.array.size();
+        return this.array.length;
     }
 }
