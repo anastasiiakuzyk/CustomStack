@@ -1,21 +1,21 @@
 public class ListStack<T> implements Stackable<T> {
-    private ListStackItem<T> head;
-    private ListStackItem<T> tail = null;
+    private ListStackItem<T> head; //bottom
+    private ListStackItem<T> tail; //top
     private int size = 0;
 
     public void push(T value) {
-        ListStackItem<T> objectDoublyNode = new ListStackItem<>(value);
+        ListStackItem<T> item = new ListStackItem<>(value);
         if (head == null) {
-            head = objectDoublyNode;
-            tail = objectDoublyNode;
+            head = item;
+            tail = item;
 
             head.setPrev(null);
 
             tail.setNext(null);
         } else {
-            tail.setNext(objectDoublyNode);
-            objectDoublyNode.setPrev(tail);
-            tail = objectDoublyNode;
+            tail.setNext(item);
+            item.setPrev(tail);
+            tail = item;
             tail.setNext(null);
         }
         size++;
@@ -36,7 +36,7 @@ public class ListStack<T> implements Stackable<T> {
         String result = "";
         ListStackItem<T> current = head;
         do {
-            result = current.toString().concat(" " + result);
+            result = current.getValue() + " " + result;
             current = current.getNext();
         } while (current != null);
         return result;
@@ -83,10 +83,5 @@ class ListStackItem<T> {
 
     public ListStackItem(T value) {
         this.value = value;
-    }
-
-    @Override
-    public String toString() {
-        return value.toString();
     }
 }
